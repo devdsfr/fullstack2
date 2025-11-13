@@ -12,13 +12,12 @@
 */
 package br.com.jtech.tasklist.adapters.output.repositories.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.UUID;
+import java.time.LocalDateTime;
 
 /**
 * class TasklistEntity 
@@ -30,14 +29,26 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "TasklistEntity")
+@Entity
+@Table(name = "tasklists")
 public class TasklistEntity {
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    private UUID id;
+    @Column(name = "id", nullable = false, length = 36)
+    private String id;
 
-    //Others parameters...
+    @Column(name = "name", nullable = false, length = 255)
+    private String name;
+
+    @Column(name = "user_id", nullable = false, length = 36)
+    private String userId;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 
 }

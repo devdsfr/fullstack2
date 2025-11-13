@@ -16,7 +16,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import br.com.jtech.tasklist.adapters.output.repositories.entities.TasklistEntity;
 
-import java.util.UUID;
+import java.util.List;
+import java.util.Optional;
 
 /**
 * class TasklistRepository 
@@ -24,6 +25,8 @@ import java.util.UUID;
 * @author angelo.vicente
 */
 @Repository
-public interface TasklistRepository extends JpaRepository<TasklistEntity, UUID> {
-    
+public interface TasklistRepository extends JpaRepository<TasklistEntity, String> {
+    List<TasklistEntity> findByUserId(String userId);
+    Optional<TasklistEntity> findByIdAndUserId(String id, String userId);
+    boolean existsByNameAndUserId(String name, String userId);
 }

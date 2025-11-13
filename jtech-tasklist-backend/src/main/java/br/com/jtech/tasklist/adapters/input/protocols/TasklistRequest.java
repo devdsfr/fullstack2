@@ -13,13 +13,14 @@
 package br.com.jtech.tasklist.adapters.input.protocols;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
 * class TasklistRequest 
@@ -32,7 +33,8 @@ import java.util.List;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TasklistRequest implements Serializable {
-    private String id;
-
-    private List<TasklistRequest> requests;
+    
+    @NotBlank(message = "Name is required")
+    @Size(min = 1, max = 255, message = "Name must be between 1 and 255 characters")
+    private String name;
 }

@@ -16,9 +16,9 @@ import br.com.jtech.tasklist.adapters.input.protocols.TasklistRequest;
 import br.com.jtech.tasklist.adapters.output.repositories.entities.TasklistEntity;
 import lombok.*;
 
-import java.util.UUID;
+import java.time.LocalDateTime;
 import java.util.List;
-
+import java.util.UUID;
 
 /**
 * class Tasklist 
@@ -34,6 +34,10 @@ import java.util.List;
 public class Tasklist {
 
     private String id;
+    private String name;
+    private String userId;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public static List<Tasklist> of(List<TasklistEntity> entities) {
         return entities.stream().map(Tasklist::of).toList();
@@ -41,19 +45,29 @@ public class Tasklist {
 
     public TasklistEntity toEntity() {
         return TasklistEntity.builder()
-            .id(UUID.fromString(getId()))
+            .id(getId())
+            .name(getName())
+            .userId(getUserId())
+            .createdAt(getCreatedAt())
+            .updatedAt(getUpdatedAt())
             .build();
      }
 
     public static Tasklist of(TasklistEntity entity) {
         return Tasklist.builder()
-            .id(entity.getId().toString())
+            .id(entity.getId())
+            .name(entity.getName())
+            .userId(entity.getUserId())
+            .createdAt(entity.getCreatedAt())
+            .updatedAt(entity.getUpdatedAt())
             .build();
      }
 
-    public static Tasklist of(TasklistRequest request) {
+    public static Tasklist of(TasklistRequest request, String userId) {
         return Tasklist.builder()
-            .id(request.getId())
+            .id(UUID.randomUUID().toString())
+            .name(request.getName())
+            .userId(userId)
             .build();
      }
  }

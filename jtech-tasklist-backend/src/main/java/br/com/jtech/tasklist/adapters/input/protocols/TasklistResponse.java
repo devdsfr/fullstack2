@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
-import java.util.List;
+import java.time.LocalDateTime;
 
 /**
 * class TasklistResponse 
@@ -38,18 +38,18 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TasklistResponse implements Serializable {
     private String id;
-    List<TasklistResponse> responses;
+    private String name;
+    private String userId;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public static TasklistResponse of(Tasklist tasklist) {
         return TasklistResponse.builder()
                 .id(tasklist.getId())
-                .build();
-    }
-
-    public static TasklistResponse of(List<TasklistEntity> entities) {
-        var list = entities.stream().map(TasklistResponse::of).toList();
-        return TasklistResponse.builder()
-                .responses(list)
+                .name(tasklist.getName())
+                .userId(tasklist.getUserId())
+                .createdAt(tasklist.getCreatedAt())
+                .updatedAt(tasklist.getUpdatedAt())
                 .build();
     }
 
